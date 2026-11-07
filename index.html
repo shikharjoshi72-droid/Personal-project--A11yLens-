@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A11yLens — A practical web accessibility inspection workspace.">
+<title>A11yLens — Accessibility Workspace</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">A</div>
+        <div class="brand-name">A11y<span>Lens</span></div>
+    </div>
+
+    <div class="nav-label">WORKSPACE</div>
+
+    <div class="nav-item active" onclick="navigate('dashboard',this)">
+        <span class="nav-icon">▦</span><span>Overview</span>
+    </div>
+
+    <div class="nav-item" onclick="navigate('contrast',this)">
+        <span class="nav-icon">◐</span><span>Contrast Checker</span>
+    </div>
+
+    <div class="nav-item" onclick="navigate('dom',this)">
+        <span class="nav-icon">⌘</span><span>DOM Inspector</span>
+    </div>
+
+    <div class="nav-item" onclick="navigate('aria',this)">
+        <span class="nav-icon">◎</span><span>ARIA Inspector</span>
+    </div>
+
+    <div class="nav-item" onclick="navigate('vision',this)">
+        <span class="nav-icon">◉</span><span>Vision Simulator</span>
+    </div>
+
+    <div class="nav-item" onclick="navigate('reports',this)">
+        <span class="nav-icon">▤</span><span>Reports</span>
+    </div>
+
+    <div class="nav-label">PREFERENCES</div>
+
+    <div class="nav-item">
+        <span class="nav-icon">⚙</span><span>Settings</span>
+    </div>
+
+    <div class="sidebar-bottom">
+        <div class="profile">
+            <div class="avatar">AJ</div>
+            <div class="profile-info">
+                <strong>Accessibility Lab</strong>
+                <small>Developer workspace</small>
+            </div>
+        </div>
+    </div>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <header class="topbar">
+        <div class="breadcrumb">
+            Workspace &nbsp;/&nbsp; <strong id="breadcrumb">Overview</strong>
+        </div>
+
+        <div class="top-actions">
+            <span class="status">● Workspace ready</span>
+            <button class="top-button" onclick="navigate('reports',document.querySelectorAll('.nav-item')[5])">
+                View reports
+            </button>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <div class="page-heading">
+            <div>
+                <h1 id="heading">Good to see you.</h1>
+                <p>Here's a quick look at your accessibility workspace.</p>
+            </div>
+            <div class="date-label" id="currentDate"></div>
+        </div>
+
+        <!-- DASHBOARD -->
+
+        <section class="section active" id="dashboard">
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Accessibility score</span>
+                        <span class="stat-icon">◈</span>
+                    </div>
+                    <div class="stat-number">86<span style="font-size:13px;color:#8993a4">/100</span></div>
+                    <div class="stat-footer">Illustrative sample score</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Issues detected</span>
+                        <span class="stat-icon">⚑</span>
+                    </div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-footer">Sample audit findings</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Checks passed</span>
+                        <span class="stat-icon">✓</span>
+                    </div>
+                    <div class="stat-number">34</div>
+                    <div class="stat-footer">Sample test results</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Pages audited</span>
+                        <span class="stat-icon">▧</span>
+                    </div>
+                    <div class="stat-number">04</div>
+                    <div class="stat-footer">Sample workspace data</div>
+                </div>
+
+            </div>
+
+            <div class="analyzer">
+                <h2>Start a new accessibility audit</h2>
+                <p>Enter a website address to prepare an accessibility inspection.</p>
+
+                <div class="url-row">
+                    <input id="websiteURL" type="url" placeholder="https://yourwebsite.com">
+                    <button class="btn-primary" onclick="analyze()">Analyze website →</button>
+                </div>
+
+                <div class="message" id="analyzeMessage">
+                    Supported checks depend on the connected inspection engine.
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="card">
+                    <div class="card-title">Accessibility overview</div>
+                    <div class="card-subtitle">Illustrative audit summary</div>
+
+                    <div class="score-layout">
+
+                        <div class="score-ring">
+                            <div class="score-center">
+                                <strong>86</strong>
+                                <span>OUT OF 100</span>
+                            </div>
+                        </div>
+
+                        <div class="score-copy">
+                            <strong>Room for improvement</strong>
+                            <p>Your sample report highlights areas that may need attention before release.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">WCAG principle coverage</div>
+                    <div class="card-subtitle">Sample category breakdown</div>
+
+                    <div class="progress-list">
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Perceivable</span><span>92%</span>
+                            </div>
+                            <div class="track"><div class="fill" style="width:92%"></div></div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Operable</span><span>81%</span>
+                            </div>
+                            <div class="track"><div class="fill" style="width:81%"></div></div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Understandable</span><span>88%</span>
+                            </div>
+                            <div class="track"><div class="fill" style="width:88%"></div></div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Robust</span><span>84%</span>
+                            </div>
+                            <div class="track"><div class="fill" style="width:84%"></div></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card issue-card">
+
+                <div class="issue-header">
+                    <div>
+                        <div class="card-title">Recent findings</div>
+                        <div class="card-subtitle">Examples of accessibility issues</div>
+                    </div>
+
+                    <span class="text-link" onclick="navigate('reports',document.querySelectorAll('.nav-item')[5])">
+                        View all →
+                    </span>
+                </div>
+
+                <div class="issue-row">
+                    <div>
+                        <div class="issue-name">Images without descriptive alternative text</div>
+                        <div class="issue-detail">Some images may not provide meaningful text alternatives.</div>
+                    </div>
+                    <span class="tag high">HIGH</span>
+                </div>
+
+                <div class="issue-row">
+                    <div>
+                        <div class="issue-name">Insufficient text contrast</div>
+                        <div class="issue-detail">Foreground and background colors may need adjustment.</div>
+                    </div>
+                    <span class="tag medium">MEDIUM</span>
+                </div>
+
+                <div class="issue-row">
+                    <div>
+                        <div class="issue-name">Form controls missing labels</div>
+                        <div class="issue-detail">Some fields may not have accessible names.</div>
+                    </div>
+                    <span class="tag low">LOW</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CONTRAST -->
+
+        <section class="section" id="contrast">
+
+            <div class="card tool-card">
+
+                <div class="card-title">Color contrast checker</div>
+                <div class="card-subtitle">Check the readability of text against a background.</div>
+
+                <div class="color-grid">
+
+                    <div class="color-field">
+                        <label for="foreground">Foreground color</label>
+                        <input type="color" id="foreground" value="#202838">
+                    </div>
+
+                    <div class="color-field">
+                        <label for="background">Background color</label>
+                        <input type="color" id="background" value="#ffffff">
+                    </div>
+
+                </div>
+
+                <div class="preview" id="preview">
+                    The quick brown fox jumps over the lazy dog.
+                </div>
+
+                <div class="result-box">
+                    <strong id="ratio">-- : 1</strong>
+                    <p id="contrastResult">Choose colors to calculate their contrast ratio.</p>
+                    <p id="contrastStandards"></p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- DOM -->
+
+        <section class="section" id="dom">
+
+            <div class="card">
+                <div class="card-title">DOM hierarchy inspector</div>
+                <div class="card-subtitle">Explore the current page's document structure.</div>
+
+                <div class="tree" id="domTree" style="margin-top:22px"></div>
+
+                <button class="secondary-button" onclick="inspectDOM()" style="margin-top:18px">
+                    Refresh DOM tree
+                </button>
+            </div>
+
+        </section>
+
+        <!-- ARIA -->
+
+        <section class="section" id="aria">
+
+            <div class="card">
+                <div class="card-title">ARIA inspector</div>
+                <div class="card-subtitle">Review ARIA attributes found in the current document.</div>
+
+                <div id="ariaResults" style="margin-top:18px"></div>
+
+                <button class="secondary-button" onclick="inspectARIA()" style="margin-top:18px">
+                    Refresh inspection
+                </button>
+            </div>
+
+        </section>
+
+        <!-- VISION -->
+
+        <section class="section" id="vision">
+
+            <div class="card">
+                <div class="card-title">Color vision simulator</div>
+                <div class="card-subtitle">Explore how color presentation changes under different filters.</div>
+
+                <div class="vision-grid">
+
+                    <div class="vision-box">
+                        <h4>Normal vision</h4>
+                        <div class="vision-sample"></div>
+                        <p>Original color presentation.</p>
+                    </div>
+
+                    <div class="vision-box">
+                        <h4>Grayscale</h4>
+                        <div class="vision-sample grayscale"></div>
+                        <p>Monochrome presentation.</p>
+                    </div>
+
+                    <div class="vision-box">
+                        <h4>Color variation</h4>
+                        <div class="vision-sample" style="filter:saturate(.35)"></div>
+                        <p>Reduced saturation preview.</p>
+                    </div>
+
+                </div>
+
+                <p class="card-subtitle" style="margin-top:20px">
+                    These visual filters are illustrative and are not clinically accurate simulations of color-vision deficiencies.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- REPORTS -->
+
+        <section class="section" id="reports">
+
+            <div class="card">
+                <div class="card-title">Audit report</div>
+                <div class="card-subtitle">Basic document inspection statistics.</div>
+
+                <div class="stats" style="margin-top:22px">
+
+                    <div class="stat-card">
+                        <div class="stat-top"><span>Images</span></div>
+                        <div class="stat-number" id="imageCount">0</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top"><span>Missing alt</span></div>
+                        <div class="stat-number" id="missingAlt">0</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top"><span>Buttons</span></div>
+                        <div class="stat-number" id="buttonCount">0</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top"><span>Inputs</span></div>
+                        <div class="stat-number" id="inputCount">0</div>
+                    </div>
+
+                </div>
+
+                <button class="btn-primary" onclick="generateReport()">
+                    Download inspection report
+                </button>
+
+                <p id="reportMessage" class="message"></p>
+            </div>
+
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <span>© 2026 A11yLens. Built for a more accessible web.</span>
+        <span>WCAG 2.2 · Accessibility workspace</span>
+    </footer>
+
+</main>
+</div>
+
+<script>
+
+/* NAVIGATION */
+
+const pageNames = {
+    dashboard: "Overview",
+    contrast: "Contrast Checker",
+    dom: "DOM Inspector",
+    aria: "ARIA Inspector",
+    vision: "Vision Simulator",
+    reports: "Reports"
+};
+
+function navigate(id, element) {
+
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    if (element) element.classList.add("active");
+
+    document.getElementById("breadcrumb").textContent = pageNames[id];
+
+    const headings = {
+        dashboard: "Good to see you.",
+        contrast: "Make every color count.",
+        dom: "Understand your page structure.",
+        aria: "Inspect accessible semantics.",
+        vision: "See beyond the colors.",
+        reports: "Your inspection report."
+    };
+
+    document.getElementById("heading").textContent = headings[id];
+
+    if (id === "dom") inspectDOM();
+    if (id === "aria") inspectARIA();
+    if (id === "reports") updateStats();
+}
+
+/* DATE */
+
+document.getElementById("currentDate").textContent =
+    new Intl.DateTimeFormat("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }).format(new Date());
+
+/* URL VALIDATION */
+
+function analyze() {
+
+    const value = document.getElementById("websiteURL").value;
+    const message = document.getElementById("analyzeMessage");
+
+    try {
+        const url = new URL(value);
+
+        if (!["http:", "https:"].includes(url.protocol)) {
+            throw new Error("Invalid URL");
+        }
+
+        message.textContent =
+            "URL is valid. Connect a browser-based audit engine to inspect this external website.";
+
+    } catch {
+        message.textContent = "Please enter a valid website address.";
+    }
+}
+
+/* CONTRAST ENGINE */
+
+function getLuminance(hex) {
+
+    const rgb = hex.match(/[a-f0-9]{2}/gi).map(value => {
+        let c = parseInt(value, 16) / 255;
+
+        return c <= 0.04045
+            ? c / 12.92
+            : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+
+    return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+}
+
+function calculateContrast() {
+
+    const fg = document.getElementById("foreground").value;
+    const bg = document.getElementById("background").value;
+
+    const a = getLuminance(fg);
+    const b = getLuminance(bg);
+
+    const ratio = (Math.max(a,b) + .05) / (Math.min(a,b) + .05);
+
+    document.getElementById("preview").style.color = fg;
+    document.getElementById("preview").style.background = bg;
+
+    document.getElementById("ratio").textContent =
+        ratio.toFixed(2) + " : 1";
+
+    document.getElementById("contrastResult").textContent =
+        ratio >= 7 ? "AAA — Passes normal and large text contrast."
+        : ratio >= 4.5 ? "AA — Passes normal text contrast."
+        : ratio >= 3 ? "Large text only — Passes the 3:1 threshold."
+        : "Fail — Does not meet WCAG AA text contrast.";
+
+    document.getElementById("contrastStandards").textContent =
+        "AA normal text: 4.5:1 · AA large text: 3:1 · AAA normal text: 7:1 · AAA large text: 4.5:1";
+}
+
+document.getElementById("foreground").addEventListener("input",calculateContrast);
+document.getElementById("background").addEventListener("input",calculateContrast);
+
+calculateContrast();
+
+/* DOM INSPECTOR */
+
+function inspectDOM() {
+
+    const output = document.getElementById("domTree");
+    output.innerHTML = "";
+
+    function build(element, depth) {
+
+        if (depth > 3) return;
+
+        const row = document.createElement("div");
+        row.className = "tree-node";
+        row.style.paddingLeft = (depth * 20) + "px";
+
+        const name = document.createElement("span");
+        name.textContent = "<" + element.tagName.toLowerCase() + ">";
+
+        row.appendChild(document.createTextNode("↳ "));
+        row.appendChild(name);
+
+        output.appendChild(row);
+
+        Array.from(element.children).slice(0,8).forEach(child => {
+            build(child, depth + 1);
+        });
+    }
+
+    build(document.body, 0);
+}
+
+/* ARIA INSPECTOR */
+
+function inspectARIA() {
+
+    const output = document.getElementById("ariaResults");
+    output.innerHTML = "";
+
+    const elements = document.querySelectorAll(
+        "[aria-label],[aria-labelledby],[aria-describedby],[role]"
+    );
+
+    if (!elements.length) {
+        output.textContent = "No ARIA attributes found.";
+        return;
+    }
+
+    elements.forEach(element => {
+
+        const item = document.createElement("div");
+        item.className = "inspect-item";
+
+        const title = document.createElement("strong");
+        title.textContent = element.tagName.toLowerCase();
+
+        const details = document.createElement("small");
+
+        details.textContent = Array.from(element.attributes)
+            .filter(attr => attr.name.startsWith("aria-") || attr.name === "role")
+            .map(attr => attr.name + '="' + attr.value + '"')
+            .join(" · ");
+
+        item.appendChild(title);
+        item.appendChild(details);
+
+        output.appendChild(item);
+    });
+}
+
+/* REPORT */
+
+function updateStats() {
+
+    const images = document.querySelectorAll("img");
+
+    document.getElementById("imageCount").textContent = images.length;
+
+    document.getElementById("missingAlt").textContent =
+        document.querySelectorAll('img:not([alt]),img[alt=""]').length;
+
+    document.getElementById("buttonCount").textContent =
+        document.querySelectorAll("button").length;
+
+    document.getElementById("inputCount").textContent =
+        document.querySelectorAll("input").length;
+}
+
+function generateReport() {
+
+    updateStats();
+
+    const data = {
+        project: "A11yLens",
+        generatedAt: new Date().toISOString(),
+        statistics: {
+            images: document.getElementById("imageCount").textContent,
+            missingAlt: document.getElementById("missingAlt").textContent,
+            buttons: document.getElementById("buttonCount").textContent,
+            inputs: document.getElementById("inputCount").textContent
+        },
+        note: "Basic DOM statistics only. This is not a complete WCAG audit."
+    };
+
+    const blob = new Blob(
+        [JSON.stringify(data,null,2)],
+        {type:"application/json"}
+    );
+
+    const link = document.createElement("a");
+    const objectURL = URL.createObjectURL(blob);
+
+    link.href = objectURL;
+    link.download = "A11yLens_Report.json";
+    link.click();
+
+    setTimeout(() => URL.revokeObjectURL(objectURL),1000);
+
+    document.getElementById("reportMessage").textContent =
+        "Your inspection report has been downloaded.";
+}
+
+inspectDOM();
+
+</script>
+
+</body>
+</html>
