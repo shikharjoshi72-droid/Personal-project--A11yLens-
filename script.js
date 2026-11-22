@@ -40,3 +40,34 @@ function navigate(id, element) {
     if (id === "aria") inspectARIA();
     if (id === "reports") updateStats();
 }
+
+/* DATE */
+
+document.getElementById("currentDate").textContent =
+    new Intl.DateTimeFormat("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }).format(new Date());
+
+/* URL VALIDATION */
+
+function analyze() {
+
+    const value = document.getElementById("websiteURL").value;
+    const message = document.getElementById("analyzeMessage");
+
+    try {
+        const url = new URL(value);
+
+        if (!["http:", "https:"].includes(url.protocol)) {
+            throw new Error("Invalid URL");
+        }
+
+        message.textContent =
+            "URL is valid. Connect a browser-based audit engine to inspect this external website.";
+
+    } catch {
+        message.textContent = "Please enter a valid website address.";
+    }
+}
